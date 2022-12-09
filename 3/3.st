@@ -21,6 +21,21 @@ Object subclass: Rucksack [
                            ifTrue: [^item]
                          ]
     ]
+
+    items [
+        ^Set from: compartment1,compartment2.
+    ]
+].
+
+OrderedCollection subclass: Group [
+    <shape: #inherit>
+
+    findBadge [
+        | sets badge |
+        sets := self collect: [ :rucksack | rucksack items ].
+        badge := sets fold: [ :a :b | a & b ].
+        ^(OrderedCollection from: badge) at: 1
+    ]
 ].
 
 Object subclass: ItemPriority [
@@ -46,5 +61,28 @@ Eval [
 
     part1 displayNl.
 
+    f position: 0.
+
+    groups := OrderedCollection new.
+    index := 0.
+    f linesDo: [ :line |
+                 r := Rucksack new: line.
+
+                 (index rem: 3) = 0
+                                ifTrue: [groups add: (Group new).].
+
+                 groups last add: r.
+
+                 index := index + 1.
+               ].
+
+    part2 := 0.
+    groups do: [ :g |
+                 badge := g findBadge.
+                 priority := ItemPriority get: badge.
+                 part2 := part2 + priority.
+               ].
+
+    part2 displayNl.
     f close.
 ].

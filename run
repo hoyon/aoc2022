@@ -1,4 +1,6 @@
 #!/bin/bash
 
+set -e
+
 pushd $1 > /dev/null
-./$1.st
+gst -f $1.st

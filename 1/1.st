@@ -1,5 +1,3 @@
-#!/usr/bin/gst -f
-
 Object subclass: Calories [
     | elves |
     Calories class >> new [

@@ -1,5 +1,3 @@
-#!/usr/bin/gst -f
-
 Object subclass: Rucksack [
     | compartment1 compartment2 |
 
